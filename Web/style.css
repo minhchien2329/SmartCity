@@ -1,0 +1,643 @@
+/* Biến màu sắc và cấu hình hệ thống (CSS Variables) */
+:root {
+  --bg: #0b1220;
+  --bg-soft: #121b2d;
+  --card: rgba(18, 27, 45, 0.95);
+  --card-border: rgba(255, 255, 255, 0.08);
+  --text: #ecf3ff;
+  --muted: #9db0d0;
+  --primary: #45a3ff;
+  --success: #35c38f;
+  --warning: #f5b84c;
+  --danger: #ff6b6b;
+  --purple: #a572ff;
+  --shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Cấu hình nền toàn trang và font chữ */
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(47, 0, 129, 0.277), transparent 82%),
+    var(--bg);
+  color: var(--text);
+}
+
+/* Đảm bảo các phần tử nhập liệu kế thừa font chữ từ body */
+button,
+select,
+input {
+  font: inherit;
+}
+
+/* Bố cục chính của ứng dụng (Chia làm 2 cột: Sidebar và Nội dung chính) */
+.app-shell {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  min-height: 100vh;
+}
+
+/* Thanh điều hướng bên trái (Sidebar) */
+.sidebar {
+  padding: 28px;
+  border-right: 1px solid var(--card-border);
+  background: rgba(15, 8, 31, 0.85);
+  backdrop-filter: blur(16px);
+}
+
+/* Khu vực Logo và Tên thành phố */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.brand-logo {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+/* Định dạng chung cho các tiêu đề và đoạn văn bản */
+.brand h1,
+.brand h2,
+.topbar h2,
+.panel-header h3,
+.metric-card h3 {
+  margin: 0;
+}
+
+.brand p,
+.topbar p,
+.panel-header p,
+.metric-card p,
+.control-item p,
+.side-card p {
+  margin: 6px 0 0;
+  color: var(--muted);
+}
+
+/* Định dạng chung cho các khối nội dung dạng thẻ (Glassmorphism style) */
+.side-card,
+.metric-card,
+.panel {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 22px;
+  box-shadow: var(--shadow);
+}
+
+.side-card {
+  padding: 18px;
+  margin-bottom: 18px;
+}
+
+.side-card label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+/* Thẻ hiển thị thông tin sinh viên thực hiện */
+.user-card h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  color: #fff;
+  font-size: 1.1rem;
+}
+
+.user-card p {
+  margin: 8px 0 0 0;
+  font-size: 0.95rem;
+}
+
+.user-card strong {
+  color: var(--muted);
+}
+
+/* Tùy chỉnh ô chọn khu vực (Dropdown) */
+select {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid var(--card-border);
+  background: #0f1728;
+  color: var(--text);
+  outline: none;
+}
+
+/* Trạng thái kết nối Database (Firebase) */
+.status-box {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+/* Dấu chấm hiển thị trạng thái online/offline */
+.dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--warning);
+  box-shadow: 0 0 14px rgba(245, 184, 76, 0.7);
+}
+
+.dot.online {
+  background: var(--success);
+  box-shadow: 0 0 14px rgba(53, 195, 143, 0.7);
+}
+
+.dot.offline {
+  background: var(--danger);
+  box-shadow: 0 0 14px rgba(255, 107, 107, 0.7);
+}
+
+/* Khu vực nội dung chính bên phải */
+.main-content {
+  padding: 28px;
+}
+
+/* Thanh tiêu đề trên cùng của nội dung chính */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+/* Cấu hình lưới (Grid) chung */
+.grid {
+  display: grid;
+  gap: 20px;
+}
+
+/* Lưới hiển thị 4 thẻ thông số cảm biến */
+.cards-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-bottom: 22px;
+}
+
+/* Lưới chia khu vực Điều khiển và Tóm tắt */
+.content-grid {
+  grid-template-columns: 1.1fr 0.9fr;
+  margin-bottom: 22px;
+}
+
+.metric-card,
+.panel {
+  padding: 22px;
+}
+
+/* Header bên trong thẻ cảm biến */
+.metric-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  color: var(--muted);
+}
+
+.metric-card h3 {
+  font-size: 2.3rem;
+  margin-bottom: 8px;
+}
+
+/* Các nhãn đơn vị (Badge) như °C, %, mm, AQI */
+.badge {
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.badge.hot { background: rgba(255, 107, 107, 0.18); color: #ffb4b4; }
+.badge.blue { background: rgba(69, 163, 255, 0.18); color: #9ed0ff; }
+.badge.green { background: rgba(53, 195, 143, 0.18); color: #9df0ce; }
+.badge.purple { background: rgba(165, 114, 255, 0.18); color: #d6b9ff; }
+
+.panel-header {
+  margin-bottom: 18px;
+}
+
+/* Danh sách các thiết bị điều khiển */
+.control-list {
+  display: grid;
+  gap: 16px;
+}
+
+/* Từng dòng thiết bị (Quạt, Bơm, Đèn) */
+.control-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: center;
+  padding: 16px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Định dạng nút bấm chung */
+.btn {
+  border: none;
+  padding: 12px 18px;
+  border-radius: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.18s ease, opacity 0.18s ease, background 0.18s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn.secondary {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text);
+}
+
+/* Nút Bật/Tắt thiết bị */
+.toggle-btn {
+  min-width: 84px;
+  background: rgba(255, 107, 107, 0.14);
+  color: #ffc4c4;
+}
+
+.toggle-btn.active {
+  background: rgba(53, 195, 143, 0.14);
+  color: #b8f7df;
+}
+
+/* Ô hiển thị văn bản tóm tắt tự động */
+.summary-box {
+  padding: 18px;
+  border-radius: 18px;
+  background: rgba(69, 163, 255, 0.08);
+  border: 1px solid rgba(69, 163, 255, 0.18);
+  color: #d9e9ff;
+  line-height: 1.6;
+}
+
+/* Các chỉ số phụ dưới phần tóm tắt */
+.mini-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.mini-stats div {
+  padding: 16px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.mini-stats span {
+  display: block;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.mini-stats strong {
+  font-size: 1.08rem;
+}
+
+/* Danh mục điều hướng trong Sidebar */
+.side-nav {
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nav-item {
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  padding: 14px 18px;
+  border-radius: 14px;
+  text-align: left;
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.nav-item:hover {
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text);
+}
+
+.nav-item.active {
+  background: rgba(69, 163, 255, 0.1);
+  color: var(--primary);
+  box-shadow: inset 0 0 0 1px rgba(69, 163, 255, 0.2);
+}
+
+.nav-item .icon {
+  font-size: 1.2rem;
+}
+
+/* Lưới hiển thị biểu đồ */
+.charts-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 22px;
+}
+
+.chart-card {
+  padding: 20px;
+}
+
+/* Container chứa canvas của Chart.js */
+.chart-container {
+  position: relative;
+  height: 260px;
+  width: 100%;
+}
+
+/* Tùy chỉnh thanh trượt (Slider) công suất */
+.slider-box {
+  margin-top: 12px;
+  width: 100%;
+}
+
+.slider-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #dfe7ff;
+}
+
+.slider-value {
+  font-weight: 700;
+  color: #8dd9ff;
+  min-width: 42px;
+  text-align: right;
+}
+
+.slider-box input[type="range"] {
+  width: 100%;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+.slider-note {
+  margin-top: 6px;
+  font-size: 12px;
+  opacity: 0.8;
+  color: var(--muted);
+}
+
+.device-inline-status {
+  margin-top: 4px;
+  font-size: 12px;
+  opacity: 0.85;
+  color: #dfe7ff;
+}
+
+/* Chỉnh giao diện cho phù hợp thiết bị */
+@media (max-width: 1150px) {
+  .cards-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 1000px) {
+  .charts-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 880px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+  }
+  .sidebar {
+    border-right: none;
+    border-bottom: 1px solid var(--card-border);
+  }
+}
+
+@media (max-width: 640px) {
+  .main-content,
+  .sidebar {
+    padding: 18px;
+  }
+  .cards-grid,
+  .mini-stats {
+    grid-template-columns: 1fr;
+  }
+  .topbar,
+  .control-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* CHATBOT */
+/* Nút tròn nổi */
+.chatbot-fab {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #45a3ff, #7b61ff);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  cursor: pointer;
+  box-shadow: 0 18px 35px rgba(0,0,0,0.35);
+  z-index: 9999;
+  transition: transform 0.2s ease;
+}
+
+.chatbot-fab:hover {
+  transform: scale(1.05);
+}
+
+/* Khung hội thoại Chatbot */
+.chatbot-panel {
+  position: fixed;
+  right: 24px;
+  bottom: 100px;
+  width: 360px;
+  max-height: 560px;
+  background: rgba(18, 27, 45, 0.98);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 22px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 9999;
+}
+
+.chatbot-panel.hidden {
+  display: none;
+}
+
+/* Đầu trang Chatbot */
+.chatbot-header {
+  padding: 16px 18px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: rgba(255,255,255,0.03);
+}
+
+.chatbot-header p {
+  margin: 4px 0 0;
+  color: #9db0d0;
+  font-size: 13px;
+}
+
+.chatbot-header button {
+  background: transparent;
+  color: white;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* Vùng hiển thị tin nhắn */
+.chatbot-messages {
+  padding: 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 320px;
+  max-height: 380px;
+}
+
+.user-msg,
+.bot-msg {
+  padding: 12px 14px;
+  border-radius: 14px;
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+.user-msg {
+  align-self: flex-end;
+  background: rgba(69, 163, 255, 0.18);
+  color: #ecf3ff;
+  max-width: 82%;
+}
+
+.bot-msg {
+  align-self: flex-start;
+  background: rgba(255,255,255,0.06);
+  color: #ecf3ff;
+  max-width: 90%;
+}
+
+/* Vùng nhập liệu Chatbot */  
+.chatbot-input-wrap {
+  display: flex;
+  gap: 10px;
+  padding: 14px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.chatbot-input-wrap input {
+  flex: 1;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: #0f1728;
+  color: white;
+  padding: 12px;
+}
+
+.chatbot-input-wrap button {
+  border: none;
+  padding: 0 16px;
+  border-radius: 12px;
+  background: #45a3ff;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+@media (max-width: 640px) {
+  .chatbot-panel {
+    width: calc(100vw - 24px);
+    right: 12px;
+    bottom: 84px;
+  }
+
+  .chatbot-fab {
+    right: 12px;
+    bottom: 12px;
+  }
+}
+
+/* --- Header --- */
+.main-header {
+  background: var(--bg-soft);
+  border-bottom: 1px solid var(--card-border);
+  padding: 15px 30px;
+  position: sticky; /* Giữ header luôn ở trên cùng khi cuộn */
+  top: 0;
+  z-index: 1001; /* Để nằm trên Sidebar và Chat Widget */
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.main-header h1 {
+  font-size: 1.2rem;
+  color: var(--primary);
+  margin: 0;
+  letter-spacing: 1px;
+}
+
+/*Footer*/
+.main-footer {
+  background: var(--bg-soft);
+  border-top: 1px solid var(--card-border);
+  padding: 20px 0;
+  margin-top: 20px;
+}
+
+.footer-content {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.footer-content p {
+  margin: 5px 0;
+}
+
+/* Điều chỉnh app-shell để không bị header che mất nếu dùng sticky */
+.app-shell {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  min-height: calc(100vh - 150px); /* Trừ đi chiều cao dự kiến của Header/Footer */
+}

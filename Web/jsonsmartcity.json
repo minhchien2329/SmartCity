@@ -1,0 +1,68 @@
+{
+  "smartCity": {
+    "quan1": {
+      "sensors": {
+        "temperature": 32.5,
+        "humidity": 70,
+        "rainfall": 15,
+        "aqi": 85,
+        "updatedAt": "2026-03-19 08:30:00"
+      },
+      "devices": {
+        "fan": false,
+        "pump": false,
+        "streetLight": false,
+        "fanLevel": 35,
+        "pumpLevel": 40
+      }
+    },
+    "quan3": {
+      "sensors": {
+        "temperature": 36.5,
+        "humidity": 55,
+        "rainfall": 0,
+        "aqi": 120,
+        "updatedAt": "2026-03-19 08:30:00"
+      },
+      "devices": {
+        "fan": true,
+        "pump": false,
+        "streetLight": false,
+        "fanLevel": 80,
+        "pumpLevel": 0
+      }
+    },
+    "quan7": {
+      "sensors": {
+        "temperature": 28.5,
+        "humidity": 88,
+        "rainfall": 65,
+        "aqi": 45,
+        "updatedAt": "2026-03-19 08:30:00"
+      },
+      "devices": {
+        "fan": false,
+        "pump": true,
+        "streetLight": true,
+        "fanLevel": 20,
+        "pumpLevel": 90
+      }
+    },
+    "thuduc": {
+      "sensors": {
+        "temperature": 31.0,
+        "humidity": 75,
+        "rainfall": 25,
+        "aqi": 60,
+        "updatedAt": "2026-03-19 08:30:00"
+      },
+      "devices": {
+        "fan": false,
+        "pump": false,
+        "streetLight": true,
+        "fanLevel": 45,
+        "pumpLevel": 55
+      }
+    }
+  }
+}
