@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart City Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    .slider-box { margin-top: 12px; width: 100%; }
+    .slider-label { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 8px; font-size: 14px; color: #dfe7ff; }
+    .slider-value { font-weight: 700; color: #8dd9ff; min-width: 42px; text-align: right; }
+    .slider-box input[type="range"] { width: 100%; accent-color: #f155ff; cursor: pointer; }
+    .slider-note { margin-top: 6px; font-size: 12px; opacity: 0.8; }
+    .device-inline-status { margin-top: 4px; font-size: 12px; opacity: 0.8; }
+  </style>
+</head>
+<body>
+  <header class="main-header">
+    <div class="header-content">
+      <h1>HỆ THỐNG QUẢN LÝ ĐÔ THỊ THÔNG MINH</h1>
+    </div>
+  </header>
+
+  <script type="module" src="function.js"></script>
+
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="tphcm.png" class="brand-logo" alt="Logo">
+        <div>
+          <h2>TP. HỒ CHÍ MINH</h2>
+          <p>Hệ thống theo dõi Thành phố</p>
+        </div>
+      </div>
+
+      <nav class="side-nav">
+        <button class="nav-item active" id="navDashboard">
+          <span class="icon">📊</span> Tổng quan
+        </button>
+      </nav>
+
+      <div class="side-card">
+        <label for="regionSelect">Chọn khu vực</label>
+        <select id="regionSelect">
+          <option value="quan1">Quận 1</option>
+          <option value="quan3">Quận 3</option>
+          <option value="quan7">Quận 7</option>
+          <option value="thuduc">Thủ Đức</option>
+        </select>
+      </div>
+
+      <div class="side-card status-box">
+        <span class="dot" id="dbDot"></span>
+        <div>
+          <strong id="dbStatus">Đang kiểm tra kết nối...</strong>
+          <p>Firebase Realtime Database</p>
+        </div>
+      </div>
+
+      <div class="side-card user-card">
+        <p><strong>Trần Minh Chiến</strong> 23119127</p>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <div id="dashboardView">
+        <header class="topbar">
+          <div>
+            <h2 id="regionTitle">Khu vực: Quận 1</h2>
+            <p id="lastUpdated">Cập nhật: --</p>
+          </div>
+          <button class="btn secondary" id="refreshBtn">Làm mới dữ liệu</button>
+        </header>
+
+        <section class="grid cards-grid">
+          <article class="metric-card">
+            <div class="metric-head">
+              <span>Nhiệt độ</span>
+              <span class="badge hot">°C</span>
+            </div>
+            <h3 id="temperatureValue">--</h3>
+            <p id="temperatureStatus">Đang chờ dữ liệu</p>
+          </article>
+
+          <article class="metric-card">
+            <div class="metric-head">
+              <span>Độ ẩm</span>
+              <span class="badge blue">%</span>
+            </div>
+            <h3 id="humidityValue">--</h3>
+            <p id="humidityStatus">Đang chờ dữ liệu</p>
+          </article>
+
+          <article class="metric-card">
+            <div class="metric-head">
+              <span>Mực nước</span>
+              <span class="badge green">mm</span>
+            </div>
+            <h3 id="waterLevelValue">--</h3>
+            <p id="waterLevelStatus">Đang chờ dữ liệu</p>
+          </article>
+
+          <article class="metric-card">
+            <div class="metric-head">
+              <span>Chất lượng không khí</span>
+              <span class="badge purple">AQI</span>
+            </div>
+            <h3 id="aqiValue">--</h3>
+            <p id="aqiStatus">Đang chờ dữ liệu</p>
+          </article>
+        </section>
+
+        <section class="grid content-grid">
+          <article class="panel">
+            <div class="panel-header">
+              <h3>Thiết bị điều khiển</h3>
+              <p>Tác động trực tiếp lên cơ sở hạ tầng</p>
+            </div>
+
+            <div class="control-list">
+              <div class="control-item">
+                <div style="flex: 1;">
+                  <strong>Quạt thông gió</strong>
+                  <p>Bật khi nhiệt độ cao</p>
+                  <div class="slider-box">
+                    <div class="slider-label">
+                      <span>Mức quạt</span>
+                      <span class="slider-value" id="fanLevelValue">0%</span>
+                    </div>
+                    <input type="range" id="fanLevel" min="0" max="100" step="1" value="0" />
+                    <div class="slider-note">0% = tắt gió, 100% = công suất lớn nhất</div>
+                    <div class="device-inline-status" id="fanInlineStatus">Quạt đang tắt</div>
+                  </div>
+                </div>
+                <button class="btn toggle-btn" id="fanBtn" data-device="fan">OFF</button>
+              </div>
+
+              <div class="control-item">
+                <div style="flex: 1;">
+                  <strong>Bơm thoát nước</strong>
+                  <p>Bật khi mực nước dâng cao</p>
+                  <div class="slider-box">
+                    <div class="slider-label">
+                      <span>Mức bơm</span>
+                      <span class="slider-value" id="pumpLevelValue">0%</span>
+                    </div>
+                    <input type="range" id="pumpLevel" min="0" max="100" step="1" value="0" />
+                    <div class="slider-note">0% = dừng bơm, 100% = công suất thoát nước tối đa</div>
+                    <div class="device-inline-status" id="pumpInlineStatus">Bơm đang tắt</div>
+                  </div>
+                </div>
+                <button class="btn toggle-btn" id="pumpBtn" data-device="pump">OFF</button>
+              </div>
+
+              <div class="control-item">
+                <div>
+                  <strong>Đèn đường</strong>
+                  <p>Bật khi trời tối hoặc thời tiết xấu</p>
+                </div>
+                <button class="btn toggle-btn" id="lightBtn" data-device="streetLight">OFF</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-header">
+              <h3>Tóm tắt khu vực</h3>
+              <p>Đánh giá tự động từ dữ liệu hiện tại</p>
+            </div>
+
+            <div class="summary-box" id="summaryBox">
+              Hệ thống đang chờ dữ liệu từ Firebase để phân tích tình trạng khu vực.
+            </div>
+
+            <div class="mini-stats">
+              <div>
+                <span>Mức nóng</span>
+                <strong id="heatLevel">--</strong>
+              </div>
+              <div>
+                <span>Nguy cơ ngập</span>
+                <strong id="floodRisk">--</strong>
+              </div>
+              <div>
+                <span>Mức AQI</span>
+                <strong id="airLevel">--</strong>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <section class="grid charts-grid">
+          <article class="panel chart-card">
+            <div class="panel-header"><h3>Nhiệt độ (°C)</h3></div>
+            <div class="chart-container"><canvas id="tempChart"></canvas></div>
+          </article>
+
+          <article class="panel chart-card">
+            <div class="panel-header"><h3>Độ ẩm (%)</h3></div>
+            <div class="chart-container"><canvas id="humChart"></canvas></div>
+          </article>
+
+          <article class="panel chart-card">
+            <div class="panel-header"><h3>Mực nước (mm)</h3></div>
+            <div class="chart-container"><canvas id="waterChart"></canvas></div>
+          </article>
+
+          <article class="panel chart-card">
+            <div class="panel-header"><h3>Chất lượng không khí (AQI)</h3></div>
+            <div class="chart-container"><canvas id="aqiChart"></canvas></div>
+          </article>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  
+  <footer class="main-footer">
+    <div class="footer-content">
+      <p>&copy; 2026 Smart City Dashboard Project.</p>
+      <p>Trường Đại học Sư phạm Kỹ thuật TP.HCM</p>
+    </div>
+  </footer>
+
+  <!-- Chatbot floating button -->
+  <div class="chatbot-fab" id="chatbotFab">💬</div>
+
+  <!-- Chatbot panel -->
+  <div class="chatbot-panel hidden" id="chatbotPanel">
+    <div class="chatbot-header">
+      <div>
+        <strong>Gemini AI Assistant</strong>
+        <p>Điều khiển Smart City bằng câu lệnh</p>
+      </div>
+      <button id="chatbotClose">✕</button>
+    </div>
+
+    <div class="chatbot-messages" id="chatbotMessages">
+      <div class="bot-msg">
+        Xin chào, bạn có thể nhập:
+        <br>• bật quạt
+        <br>• tắt bơm
+        <br>• đặt quạt 70%
+        <br>• bật chế độ tự động
+        <br>• khu vực này có nguy cơ ngập không
+      </div>
+    </div>
+
+    <div class="chatbot-input-wrap">
+      <input type="text" id="chatbotInput" placeholder="Nhập lệnh..." />
+      <button id="chatbotSend">Gửi</button>
+    </div>
+  </div>
+  <script type="module" src="function.js"></script>
+
+
+</body>
+</html>
