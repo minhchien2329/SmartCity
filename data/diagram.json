@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "author": "OpenAI",
+  "editor": "wokwi",
+    "parts": [
+    {
+      "type": "board-esp32-devkit-c-v4",
+      "id": "esp",
+      "top": 0,
+      "left": 0,
+      "attrs": { "builder": "esp-idf" }
+    },
+    { "type": "wokwi-dht22", "id": "dht1", "top": -134.1, "left": -101.4, "attrs": {} },
+    { "type": "wokwi-potentiometer", "id": "pot1", "top": -126.1, "left": -0.2, "attrs": {} },
+    { "type": "wokwi-potentiometer", "id": "pot2", "top": -126.1, "left": 95.8, "attrs": {} },
+    { "type": "wokwi-led", "id": "led1", "top": 6, "left": 128.6, "attrs": { "color": "red" } },
+    { "type": "wokwi-led", "id": "led2", "top": 6, "left": 157.4, "attrs": { "color": "red" } },
+    { "type": "wokwi-led", "id": "led3", "top": 6, "left": 186.2, "attrs": { "color": "red" } }
+  ],
+  "connections": [
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "esp:15", "dht1:SDA", "green", [ "v0", "h24.04", "v48", "h-182.4" ] ],
+    [ "pot1:SIG", "esp:34", "green", [ "v57.6", "h-48.4", "v67.2" ] ],
+    [ "pot2:SIG", "esp:35", "green", [ "v48", "h-154", "v86.4" ] ],
+    [ "led1:A", "esp:21", "green", [ "v0" ] ],
+    [ "led1:C", "esp:GND.2", "green", [ "v0" ] ],
+    [ "led2:C", "esp:GND.2", "green", [ "v0" ] ],
+    [ "led2:A", "esp:22", "green", [ "v48", "h-67.2", "v-48" ] ],
+    [ "led3:A", "esp:23", "green", [ "v57.6", "h-86.4", "v-67.2" ] ],
+    [ "led3:C", "esp:GND.2", "green", [ "v0" ] ],
+    [ "pot2:GND", "esp:GND.2", "black", [ "v0" ] ],
+    [ "pot1:GND", "esp:GND.2", "black", [ "v38.4", "h76.8" ] ],
+    [ "dht1:GND", "esp:GND.2", "black", [ "v0" ] ],
+    [ "dht1:VCC", "esp:3V3", "red", [ "v0" ] ],
+    [ "pot1:VCC", "esp:3V3", "red", [ "v0" ] ],
+    [ "pot2:VCC", "esp:3V3", "red", [ "v0" ] ]
+  ],
+  "dependencies": {}
+}
